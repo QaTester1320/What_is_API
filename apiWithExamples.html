@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>What is an API? - Interactive Real-Life Examples</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     .animate-bounce { animation: bounce 1s infinite; }
@@ -18,6 +19,10 @@
       width: 0;
       transition: width 0.3s;
     }
+    .step { display: none; }
+    .step.active { display: flex; }
+    .demo-img { width: 48px; height: 48px; margin-right: 1rem; }
+    .demo-video { width: 120px; border-radius: 0.5rem; margin-right: 1rem; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -34,7 +39,7 @@
 
     <footer class="text-center text-gray-500 py-8 border-t border-gray-200">
       <p>Made with ❤️ to help everyone understand APIs</p>
-      <p class="text-sm mt-2">Note: All images are placeholders showing what the final content would look like</p>
+      <p class="text-sm mt-2">Note: All images and videos are placeholders showing what the final content would look like</p>
     </footer>
   </div>
 
@@ -45,120 +50,242 @@
         icon: "🌤️",
         title: "Weather App",
         description: "Your app asks for the weather using an API.",
+        steps: [
+          { text: "You open the weather app and tap 'Check Weather'.", img: "🌤️" },
+          { text: "The app sends your request to the API.", img: "📡" },
+          { text: "API delivers the request to the weather server.", img: "💻" },
+          { text: "Weather server sends back the current weather.", img: "☁️" },
+          { text: "API delivers the answer to your app.", img: "📲" }
+        ],
         response: "75°F, Sunny with scattered clouds"
       },
       {
         icon: "🤖",
         title: "Social Media Bot",
         description: "Bots use APIs to post or reply automatically.",
-        response: "Bot tweeted: 'Remember to drink water!'"
+        steps: [
+          { text: "You tweet with #remindme.", img: "🐦" },
+          { text: "Bot monitors tweets using the API.", img: "🤖" },
+          { text: "API notifies the bot about your tweet.", img: "🔔" },
+          { text: "Bot replies automatically.", img: "💬" }
+        ],
+        response: "Bot replied: 'Remember to drink water!'"
       },
       {
         icon: "🔑",
         title: "Login with Google/Facebook",
         description: "APIs let you log in without a new password.",
+        steps: [
+          { text: "You click 'Login with Google'.", img: "🔑" },
+          { text: "The app sends a request to Google's API.", img: "📡" },
+          { text: "Google checks your account.", img: "🧑‍💻" },
+          { text: "API confirms your identity.", img: "✅" },
+          { text: "You're logged in!", img: "🎉" }
+        ],
         response: "Logged in as: user@gmail.com"
       },
       {
         icon: "💳",
         title: "Pay with PayPal",
         description: "APIs handle your payment securely.",
+        steps: [
+          { text: "You choose 'Pay with PayPal' at checkout.", img: "💳" },
+          { text: "The shop sends payment details to PayPal API.", img: "📡" },
+          { text: "PayPal processes your payment.", img: "🏦" },
+          { text: "API confirms payment to the shop.", img: "✅" }
+        ],
         response: "Payment successful! Order confirmed."
       },
       {
         icon: "🗺️",
         title: "Google Maps",
         description: "APIs show maps and directions in apps.",
+        steps: [
+          { text: "You search for 'coffee shop nearby'.", img: "🗺️" },
+          { text: "App asks Google Maps API for locations.", img: "📡" },
+          { text: "API gets results from Google Maps.", img: "📍" },
+          { text: "Coffee shop locations appear on your app.", img: "☕" }
+        ],
         response: "Coffee Shop: 500 meters away"
       },
       {
         icon: "✈️",
         title: "Travel Booking",
         description: "APIs collect flight and hotel info for you.",
+        steps: [
+          { text: "You search for flights.", img: "✈️" },
+          { text: "App asks airline APIs for options.", img: "📡" },
+          { text: "APIs collect results from airlines.", img: "📄" },
+          { text: "You see all flights in one place.", img: "🧳" }
+        ],
         response: "Flight booked: Mumbai → Delhi, 10:30 AM"
       },
       {
         icon: "🎬",
         title: "Streaming Service",
         description: "APIs stream movies and music to your device.",
+        steps: [
+          { text: "You tap 'Play' on a movie.", img: "🎬" },
+          { text: "App requests the movie via API.", img: "📡" },
+          { text: "API streams the movie from the server.", img: "🎥" },
+          { text: "Movie plays on your device.", img: "📺" }
+        ],
         response: "Now playing: 'Planet Earth II'"
       },
       {
         icon: "🏦",
         title: "Bank App",
         description: "APIs update your balance and transactions.",
+        steps: [
+          { text: "You open your bank app.", img: "🏦" },
+          { text: "App asks bank API for your balance.", img: "📡" },
+          { text: "API gets info from the bank server.", img: "💻" },
+          { text: "Your balance is shown in the app.", img: "💰" }
+        ],
         response: "Balance: ₹12,500"
       },
       {
         icon: "📦",
         title: "E-commerce Shopping",
         description: "APIs check stock and track orders.",
+        steps: [
+          { text: "You order a product online.", img: "🛒" },
+          { text: "App checks stock via API.", img: "📦" },
+          { text: "API processes payment and shipping.", img: "💳" },
+          { text: "You get order updates in the app.", img: "📲" }
+        ],
         response: "Order shipped! Tracking: 123456"
       },
       {
         icon: "💬",
         title: "Chatbot",
         description: "APIs help bots answer your questions instantly.",
+        steps: [
+          { text: "You ask a question in chat.", img: "💬" },
+          { text: "Chatbot uses API to search for answers.", img: "🔍" },
+          { text: "API gets info from a database.", img: "🗄️" },
+          { text: "Chatbot replies instantly.", img: "🤖" }
+        ],
         response: "Bot: 'How can I help you today?'"
       },
       {
         icon: "▶️",
         title: "YouTube Embed",
         description: "APIs let sites show YouTube videos.",
+        steps: [
+          { text: "You open a website with a YouTube video.", img: "▶️" },
+          { text: "Website uses YouTube API to fetch the video.", img: "📡" },
+          { text: "API streams the video to your browser.", img: "🎞️" },
+          { text: "Video plays on the website.", img: "💻" }
+        ],
         response: "Video: 'How APIs Work' is now playing"
       },
       {
         icon: "🚗",
         title: "Ride-Sharing",
         description: "APIs connect you with drivers and maps.",
+        steps: [
+          { text: "You book a ride.", img: "🚗" },
+          { text: "App asks API for nearby drivers.", img: "📡" },
+          { text: "API finds a driver and route.", img: "🗺️" },
+          { text: "You see your driver on the map.", img: "👀" }
+        ],
         response: "Driver arriving in 3 minutes"
       },
       {
         icon: "🍔",
         title: "Food Delivery App",
         description: "APIs check menus and track delivery.",
+        steps: [
+          { text: "You order food from an app.", img: "🍔" },
+          { text: "App checks menu and places order via API.", img: "📡" },
+          { text: "API tracks your delivery.", img: "🛵" },
+          { text: "You see your food on the way.", img: "📲" }
+        ],
         response: "Your pizza is on the way!"
       },
       {
         icon: "💡",
         title: "Smart Home Devices",
         description: "APIs control lights and appliances.",
+        steps: [
+          { text: "You say 'Turn on the lights!'", img: "💡" },
+          { text: "Smart speaker sends API request.", img: "🔊" },
+          { text: "API tells the smart bulb to turn on.", img: "📡" },
+          { text: "Lights turn on in your room.", img: "🏠" }
+        ],
         response: "Living room lights turned ON"
       },
       {
         icon: "🏃",
         title: "Fitness Tracker",
         description: "APIs sync your steps and health data.",
+        steps: [
+          { text: "You walk with your fitness band.", img: "🏃" },
+          { text: "Band sends data to health app via API.", img: "📡" },
+          { text: "API updates your daily steps.", img: "📊" },
+          { text: "You see your progress in the app.", img: "📲" }
+        ],
         response: "Steps today: 8,234"
       },
       {
         icon: "📱",
         title: "Messaging App",
         description: "APIs deliver your messages instantly.",
+        steps: [
+          { text: "You send a message.", img: "📱" },
+          { text: "App sends message via API.", img: "📡" },
+          { text: "API delivers it to your friend.", img: "👫" },
+          { text: "Friend receives message instantly.", img: "📲" }
+        ],
         response: "Message sent to Priya"
       },
       {
         icon: "💱",
         title: "Currency Conversion",
         description: "APIs fetch the latest exchange rates.",
+        steps: [
+          { text: "You enter amount to convert.", img: "💱" },
+          { text: "App asks API for latest rates.", img: "📡" },
+          { text: "API gets rates from currency server.", img: "💻" },
+          { text: "Converted amount appears in app.", img: "📲" }
+        ],
         response: "₹1,000 = $12.50"
       },
       {
         icon: "📰",
         title: "News Aggregator",
         description: "APIs gather news from many sources.",
+        steps: [
+          { text: "You open a news app.", img: "📰" },
+          { text: "App asks APIs for latest headlines.", img: "📡" },
+          { text: "API collects news from many sites.", img: "🌐" },
+          { text: "You see all headlines in one place.", img: "📲" }
+        ],
         response: "Top headline: 'Tech Advances in 2025'"
       },
       {
         icon: "📅",
         title: "Online Calendar",
         description: "APIs sync your events everywhere.",
+        steps: [
+          { text: "You add an event to your calendar.", img: "📅" },
+          { text: "App sends event to API.", img: "📡" },
+          { text: "API syncs event to all devices.", img: "🔄" },
+          { text: "Event appears on all your calendars.", img: "📲" }
+        ],
         response: "Event added: Meeting at 2 PM"
       },
       {
         icon: "🔍",
         title: "Product Search",
         description: "APIs find products and reviews for you.",
+        steps: [
+          { text: "You search for headphones.", img: "🔍" },
+          { text: "App asks API for product info.", img: "📡" },
+          { text: "API gets details and reviews.", img: "⭐" },
+          { text: "You see best matches in the app.", img: "📲" }
+        ],
         response: "Best match: 'Wireless Headphones'"
       }
     ];
@@ -167,6 +294,7 @@
     const container = document.getElementById('api-examples');
     apiExamples.forEach((ex, idx) => {
       const demoId = `api-demo-${idx}`;
+      const stepsId = `api-steps-${idx}`;
       const progressId = `api-progress-${idx}`;
       const resultId = `api-result-${idx}`;
       container.innerHTML += `
@@ -178,8 +306,9 @@
               <div class="text-sm text-gray-600">${ex.description}</div>
             </div>
           </div>
-          <button onclick="showAPIDemo('${demoId}', '${progressId}', '${resultId}', \`${ex.response}\`)" class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">See a Demo</button>
+          <button onclick="showAPIDemo('${demoId}', '${stepsId}', '${progressId}', '${resultId}', ${idx})" class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">See a Demo</button>
           <div id="${demoId}" class="hidden mt-4">
+            <div id="${stepsId}" class="flex flex-col gap-2 mb-2"></div>
             <div class="progress-bar" id="${progressId}"></div>
             <div id="${resultId}" class="hidden mt-2 text-green-600 font-bold"></div>
           </div>
@@ -188,27 +317,53 @@
     });
 
     // Demo logic for all boxes
-    function showAPIDemo(demoId, progressId, resultId, responseText) {
+    function showAPIDemo(demoId, stepsId, progressId, resultId, exIdx) {
       const demoElement = document.getElementById(demoId);
+      const stepsElement = document.getElementById(stepsId);
       const progressBar = document.getElementById(progressId);
       const resultElement = document.getElementById(resultId);
+
       demoElement.classList.remove('hidden');
+      stepsElement.innerHTML = '';
       progressBar.style.width = '0%';
       resultElement.classList.add('hidden');
-      let width = 0;
-      const interval = setInterval(() => {
-        width += 10;
-        progressBar.style.width = width + '%';
-        if (width >= 100) {
-          clearInterval(interval);
-          resultElement.textContent = "API Response: " + responseText;
-          resultElement.classList.remove('hidden');
+
+      // Show steps one by one
+      const steps = apiExamples[exIdx].steps;
+      let currentStep = 0;
+      function showStep() {
+        if (currentStep < steps.length) {
+          const step = steps[currentStep];
+          const stepDiv = document.createElement('div');
+          stepDiv.className = 'step active items-center';
+          stepDiv.innerHTML = `
+            <span class="text-3xl mr-2">${step.img}</span>
+            <span>${step.text}</span>
+          `;
+          stepsElement.appendChild(stepDiv);
+          currentStep++;
+          setTimeout(showStep, 900);
+        } else {
+          // Show progress bar and final response
+          let width = 0;
+          progressBar.style.width = '0%';
+          const interval = setInterval(() => {
+            width += 10;
+            progressBar.style.width = width + '%';
+            if (width >= 100) {
+              clearInterval(interval);
+              resultElement.textContent = "API Response: " + apiExamples[exIdx].response;
+              resultElement.classList.remove('hidden');
+            }
+          }, 60);
         }
-      }, 80);
+      }
+      showStep();
       demoElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   </script>
 </body>
 </html>
+
 
 
