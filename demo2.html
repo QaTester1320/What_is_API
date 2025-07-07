@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>APIs in Real Life – Interactive & Fun Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .animate-bounce { animation: bounce 1s infinite; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .progress-bar {
+      background: #3b82f6;
+      height: 10px;
+      border-radius: 5px;
+      width: 0;
+      transition: width 0.3s;
+    }
+    .step { display: none; }
+    .step.active { display: flex; }
+    .demo-img, .demo-gif { width: 48px; height: 48px; object-fit: cover; margin-right: 1rem; border-radius: 8px; }
+    .dark .bg-white { background-color: #23272f !important; }
+    .dark .text-gray-900 { color: #f7fafc !important; }
+    .dark .text-gray-700 { color: #e5e7eb !important; }
+    .dark .text-gray-500 { color: #a0aec0 !important; }
+    .dark .bg-blue-100 { background-color: #2d3748 !important; }
+    .dark .text-black { color: #f7fafc !important; }
+    .dark .border-gray-200 { border-color: #4a5568 !important; }
+    .dark .bg-gray-50 { background-color: #171923 !important; }
+    .dark .shadow { box-shadow: 0 2px 8px rgba(0,0,0,0.7) !important; }
+    .dark .bg-blue-500 { background-color: #2563eb !important; }
+    .dark .hover\:bg-blue-600:hover { background-color: #1e40af !important; }
+    .dark .bg-gray-200 { background-color: #23272f !important; }
+    .dark .hover\:bg-gray-300:hover { background-color: #2d3748 !important; }
+    .dark .bg-gray-700 { background-color: #2d3748 !important; }
+    .dark .text-gray-800 { color: #e5e7eb !important; }
+    .dark .text-gray-100 { color: #f7fafc !important; }
+    .dark .bg-blue-600 { background-color: #1e40af !important; }
+    .category-btn.active, .category-btn:hover { background: #3b82f6; color: #fff; }
+    .dark .category-btn.active, .dark .category-btn:hover { background: #2563eb; color: #fff; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 transition-colors duration-300" id="body">
+  <div class="max-w-5xl mx-auto p-4">
+    <!-- Header -->
+    <header class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
+      <div>
+        <h1 class="text-4xl font-extrabold mb-2 flex items-center gap-2">
+          <span class="animate-bounce">🤖</span>
+          <span>APIs in Real Life</span>
+        </h1>
+        <div class="flex items-center gap-3 mt-2">
+          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2k3M3h2Y3k0Z2Z2d2F0M2ZzN3Bod2FqZ3YxY3J1dG9jZWU2a2ZyZyZ1b2N1eGk1a3lqN2xpZyZ2b2FzYjV3Z3Y3d2xwOGk1cG4w/g9582DNuQppxC/giphy.gif" alt="API Animation" class="demo-gif" />
+          <p class="text-lg max-w-2xl">
+            <b>APIs</b> are like <b>digital messengers</b> that let apps, devices, and websites <span class="text-blue-600">work together</span>.<br>
+            <span class="text-blue-500 font-bold">Order food, play games, chat, shop, or travel—all powered by APIs!</span>
+          </p>
+        </div>
+      </div>
+      <button id="toggleMode" class="mt-4 md:mt-0 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-4 py-2 rounded shadow hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center gap-2">
+        <span id="modeIcon">🌙</span> <span id="modeText">Dark Mode</span>
+      </button>
+    </header>
+
+    <!-- Categories Navigation -->
+    <nav class="mb-8 flex flex-wrap gap-2" id="categories-nav"></nav>
+
+    <!-- Main Content -->
+    <main id="main-content"></main>
+
+    <footer class="text-center text-gray-500 py-8 border-t border-gray-200 mt-8">
+      <p>Made with ❤️ to help everyone understand APIs</p>
+      <p class="text-sm mt-2">Note: Images and GIFs are for demonstration only.</p>
+    </footer>
+  </div>
+
+  <script>
+    // --- Light/Dark Mode ---
+    const body = document.getElementById('body');
+    const toggleBtn = document.getElementById('toggleMode');
+    const modeIcon = document.getElementById('modeIcon');
+    const modeText = document.getElementById('modeText');
+    let darkMode = false;
+    toggleBtn.onclick = function() {
+      darkMode = !darkMode;
+      document.body.classList.toggle('dark');
+      modeIcon.textContent = darkMode ? '☀️' : '🌙';
+      modeText.textContent = darkMode ? 'Light Mode' : 'Dark Mode';
+    };
+
+    // --- Categories & Data ---
+    const categories = [
+      { id: "gaming", label: "🎮 Gaming" },
+      { id: "ecommerce", label: "🛒 E-commerce" },
+      { id: "mapsfood", label: "🗺️ Maps & Food" },
+      { id: "smarthome", label: "🏠 Smart Home" },
+      { id: "communication", label: "📱 Communication" },
+      { id: "finance", label: "💳 Finance" },
+      { id: "health", label: "🏥 Health" },
+      { id: "travel", label: "✈️ Travel" },
+      { id: "satellite", label: "🛰️ Satellite & Space" },
+      { id: "utility", label: "🛠️ Utilities" },
+      { id: "news", label: "📰 News & Media" },
+      { id: "education", label: "📚 Education" },
+      { id: "security", label: "🔒 Security" }
+    ];
+
+    // --- 50+ Real-World Examples ---
+    // Each example: icon, title, category, description, steps (with images/gifs), response
+    const apiExamples = [
+      // --- Gaming (7) ---
+      {
+        icon: "🎮",
+        title: "PUBG Multiplayer",
+        category: "gaming",
+        description: "Connect and play with 100 players worldwide in real time.",
+        steps: [
+          { text: "You tap 'Start Match' in PUBG.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055687.png" },
+          { text: "Game sends your request to the API server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API matches you with 99 other players.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "Real-time moves sync via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" }
+        ],
+        response: "API Response: Match started! 100 players online."
+      },
+      {
+        icon: "🧩",
+        title: "Candy Crush Sync",
+        category: "gaming",
+        description: "Save your puzzle progress and scores to the cloud.",
+        steps: [
+          { text: "You clear a level in Candy Crush.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "Game sends your score to the API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API stores your progress in the cloud.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Your progress syncs across devices.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055674.png" }
+        ],
+        response: "API Response: Level up! Score saved to your account."
+      },
+      {
+        icon: "👻",
+        title: "Unlock Horror Stories",
+        category: "gaming",
+        description: "Get new chapters in story games instantly.",
+        steps: [
+          { text: "You finish a chapter in a horror game.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "Game asks API for next chapter.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API delivers new content.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "You continue your spooky adventure.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055680.png" }
+        ],
+        response: "API Response: New chapter unlocked!"
+      },
+      {
+        icon: "🕹️",
+        title: "Arcade Leaderboards",
+        category: "gaming",
+        description: "See who’s #1 in the world.",
+        steps: [
+          { text: "You get a high score.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055682.png" },
+          { text: "Game posts your score via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API updates global leaderboard.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You check your rank instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: You are now #5 globally!"
+      },
+      {
+        icon: "🎲",
+        title: "Online Puzzles",
+        category: "gaming",
+        description: "Play puzzles with friends and see real-time moves.",
+        steps: [
+          { text: "You invite a friend to a puzzle game.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "Game uses API to connect both players.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API syncs moves in real time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" },
+          { text: "You solve puzzles together!", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" }
+        ],
+        response: "API Response: Puzzle solved! Both scores updated."
+      },
+      {
+        icon: "🏎️",
+        title: "Racing Game Ghosts",
+        category: "gaming",
+        description: "Race against your previous best lap (ghost data).",
+        steps: [
+          { text: "You finish a lap in a racing game.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "Game uploads your lap time via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API stores ghost data on server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Next race, your ghost appears.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055674.png" }
+        ],
+        response: "API Response: Your ghost is ready for the next race!"
+      },
+      {
+        icon: "🎤",
+        title: "Voice Chat in Games",
+        category: "gaming",
+        description: "Talk to teammates using in-game voice chat APIs.",
+        steps: [
+          { text: "You press 'Talk' in a game.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" },
+          { text: "Game sends your voice to API server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API routes voice to your friends.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Friends hear you in real time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Voice chat connected."
+      },
+      // --- E-commerce (7) ---
+      {
+        icon: "🛒",
+        title: "Product Search",
+        category: "ecommerce",
+        description: "Find the best products and deals instantly.",
+        steps: [
+          { text: "You search for headphones.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for product info.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API gets details and reviews.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see best matches in the app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Best match: 'Wireless Headphones'"
+      },
+      {
+        icon: "📦",
+        title: "Order Tracking",
+        category: "ecommerce",
+        description: "Track your package in real-time.",
+        steps: [
+          { text: "You check your order status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "App asks shipping API for updates.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API gets info from courier.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "You see live tracking in your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Your package is out for delivery!"
+      },
+      {
+        icon: "💳",
+        title: "Payment Gateway",
+        category: "ecommerce",
+        description: "Pay securely with many options.",
+        steps: [
+          { text: "You choose to pay by card.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App sends payment info to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API processes payment securely.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "You get instant confirmation.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Payment successful!"
+      },
+      {
+        icon: "⭐",
+        title: "Customer Reviews",
+        category: "ecommerce",
+        description: "See what others say before you buy.",
+        steps: [
+          { text: "You check product reviews.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "App fetches reviews via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API gets reviews from the server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "You read reviews instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: 4.8/5 stars from 1,200 reviews."
+      },
+      {
+        icon: "🎁",
+        title: "Gift Card Redemption",
+        category: "ecommerce",
+        description: "Redeem and use gift cards online.",
+        steps: [
+          { text: "You enter a gift card code.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055682.png" },
+          { text: "App checks code with API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API verifies and applies balance.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "You use your gift card instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Gift card applied! ₹500 added."
+      },
+      {
+        icon: "📱",
+        title: "Mobile Wallets",
+        category: "ecommerce",
+        description: "Pay with Google Pay, PhonePe, or Paytm.",
+        steps: [
+          { text: "You select 'Pay with Google Pay'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App sends payment request to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API processes payment instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "Order confirmed in seconds.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Payment received via Google Pay!"
+      },
+      {
+        icon: "🧾",
+        title: "Invoice Download",
+        category: "ecommerce",
+        description: "Download your bill after purchase.",
+        steps: [
+          { text: "You tap 'Download Invoice'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "App requests invoice from API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API generates and sends PDF.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "Invoice downloads to your device.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Invoice downloaded!"
+      },
+      // --- Maps & Food (6) ---
+      {
+        icon: "🗺️",
+        title: "Google Maps Directions",
+        category: "mapsfood",
+        description: "Get directions to anywhere instantly.",
+        steps: [
+          { text: "You search for a destination.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks Google Maps API for route.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API returns directions and traffic info.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see the route on your map.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Route found! ETA: 20 min."
+      },
+      {
+        icon: "🍔",
+        title: "Zomato Food Ordering",
+        category: "mapsfood",
+        description: "Order food from your favorite restaurant.",
+        steps: [
+          { text: "You browse Zomato for food.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for restaurant menus.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API returns menu & prices.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You place order via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Order placed! Delivery in 30 min."
+      },
+      {
+        icon: "🍟",
+        title: "Swiggy Delivery Tracking",
+        category: "mapsfood",
+        description: "Track your food delivery live.",
+        steps: [
+          { text: "You order food on Swiggy.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for delivery status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API tracks delivery partner's location.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "You see your food on the map.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Your food is 5 min away!"
+      },
+      {
+        icon: "☕",
+        title: "Starbucks Store Locator",
+        category: "mapsfood",
+        description: "Find the nearest Starbucks.",
+        steps: [
+          { text: "You search 'Starbucks near me'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for stores nearby.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API returns list of stores.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see the closest Starbucks.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Starbucks 400m away."
+      },
+      {
+        icon: "🍕",
+        title: "Domino's Pizza Tracker",
+        category: "mapsfood",
+        description: "Track your pizza from oven to door.",
+        steps: [
+          { text: "You order pizza on Domino's app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for pizza status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API updates status: baking, out for delivery.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "You see live pizza tracker.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Pizza out for delivery!"
+      },
+      {
+        icon: "🍱",
+        title: "Uber Eats Menu Sync",
+        category: "mapsfood",
+        description: "See real-time menus from restaurants.",
+        steps: [
+          { text: "You browse Uber Eats.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for updated menus.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API syncs menu changes instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see latest menu in app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Menu updated!"
+      },
+      // --- Smart Home (5) ---
+      {
+        icon: "💡",
+        title: "Smart Bulb Control",
+        category: "smarthome",
+        description: "Turn on/off your lights with your phone.",
+        steps: [
+          { text: "You tap 'Turn on' in your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "App sends command to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API talks to smart bulb.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Bulb turns on instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Lights ON!"
+      },
+      {
+        icon: "🔒",
+        title: "Smart Door Lock",
+        category: "smarthome",
+        description: "Lock/unlock your door from anywhere.",
+        steps: [
+          { text: "You tap 'Unlock' on your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055682.png" },
+          { text: "App sends unlock command to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API talks to door lock.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Door unlocks instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Door unlocked!"
+      },
+      {
+        icon: "🌡️",
+        title: "Smart Thermostat",
+        category: "smarthome",
+        description: "Set your home temperature remotely.",
+        steps: [
+          { text: "You set temperature in app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055680.png" },
+          { text: "App sends setting to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API updates thermostat.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Temperature adjusts in real time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Temp set to 22°C."
+      },
+      {
+        icon: "🎥",
+        title: "Smart Security Camera",
+        category: "smarthome",
+        description: "View live camera feed from anywhere.",
+        steps: [
+          { text: "You open camera app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" },
+          { text: "App asks API for live video.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API streams video from camera.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "You watch live feed on phone.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Live feed streaming."
+      },
+      {
+        icon: "🗣️",
+        title: "Voice Assistant (Alexa, Google Home)",
+        category: "smarthome",
+        description: "Control devices with your voice.",
+        steps: [
+          { text: "You say 'Turn on the fan!'", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "Voice assistant sends command to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API controls your smart fan.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Fan turns on instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Fan ON!"
+      },
+      // --- Communication (4) ---
+      {
+        icon: "📧",
+        title: "Gmail API",
+        category: "communication",
+        description: "Send and receive emails from any app.",
+        steps: [
+          { text: "You write an email in an app.", img: "https://cdn-icons-png.flaticon.com/512/732/732200.png" },
+          { text: "App sends email to Gmail API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API delivers email to recipient.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Recipient reads email instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Email sent!"
+      },
+      {
+        icon: "💬",
+        title: "WhatsApp Messaging",
+        category: "communication",
+        description: "Send instant messages to friends.",
+        steps: [
+          { text: "You type a message in WhatsApp.", img: "https://cdn-icons-png.flaticon.com/512/733/733585.png" },
+          { text: "App sends message via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API delivers message to friend.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Friend receives message instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Message delivered!"
+      },
+      {
+        icon: "📞",
+        title: "Skype Video Call",
+        category: "communication",
+        description: "Make video calls from your device.",
+        steps: [
+          { text: "You start a Skype video call.", img: "https://cdn-icons-png.flaticon.com/512/733/733585.png" },
+          { text: "App connects via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API establishes video stream.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "You see your friend live.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Video call connected!"
+      },
+      {
+        icon: "📲",
+        title: "SMS Gateway",
+        category: "communication",
+        description: "Send SMS from apps (like OTPs).",
+        steps: [
+          { text: "You request OTP for login.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App sends SMS request to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API delivers OTP to your phone.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You receive OTP instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: OTP sent!"
+      },
+      // --- Finance (4) ---
+      {
+        icon: "🏦",
+        title: "Bank Balance Check",
+        category: "finance",
+        description: "See your account balance instantly.",
+        steps: [
+          { text: "You open your bank app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "App asks bank API for balance.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches balance from server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Balance appears in your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Balance: ₹12,500"
+      },
+      {
+        icon: "💸",
+        title: "UPI Money Transfer",
+        category: "finance",
+        description: "Send money instantly with UPI.",
+        steps: [
+          { text: "You enter amount and tap 'Send'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App sends transfer request to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API processes transfer instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "Recipient gets money instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: ₹500 sent successfully!"
+      },
+      {
+        icon: "💱",
+        title: "Currency Conversion",
+        category: "finance",
+        description: "Get real-time exchange rates.",
+        steps: [
+          { text: "You enter amount to convert.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for latest rates.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches rates from currency server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Converted amount appears in app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: ₹1,000 = $12.50"
+      },
+      {
+        icon: "📈",
+        title: "Stock Market App",
+        category: "finance",
+        description: "Track real-time stock prices.",
+        steps: [
+          { text: "You search for a stock.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for stock price.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest price.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Price updates in real time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: TCS ₹3,500.00"
+      },
+      // --- Health (3) ---
+      {
+        icon: "🏃",
+        title: "Fitness Tracker Sync",
+        category: "health",
+        description: "Sync your steps and health data.",
+        steps: [
+          { text: "You walk with your fitness band.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "Band sends data to app via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API updates your daily steps.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see your progress in the app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Steps today: 8,234"
+      },
+      {
+        icon: "🩺",
+        title: "Telemedicine Video Call",
+        category: "health",
+        description: "Consult doctors online via video.",
+        steps: [
+          { text: "You book a video consultation.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" },
+          { text: "App connects to doctor via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API establishes secure video stream.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "You see your doctor live.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Video call started!"
+      },
+      {
+        icon: "🧬",
+        title: "DNA Test Kit",
+        category: "health",
+        description: "Get your DNA results via app.",
+        steps: [
+          { text: "You send sample to lab.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "Lab uploads results via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API notifies your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You view results instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Results ready!"
+      },
+      // --- Travel (3) ---
+      {
+        icon: "🚕",
+        title: "Uber Ride Booking",
+        category: "travel",
+        description: "Book rides and track your cab live.",
+        steps: [
+          { text: "You book a ride in Uber.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "App sends booking to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API finds nearest driver.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "You track driver on the map.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Driver arriving in 3 min."
+      },
+      {
+        icon: "✈️",
+        title: "Flight Status Check",
+        category: "travel",
+        description: "Get real-time flight updates.",
+        steps: [
+          { text: "You search for your flight.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for flight status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest info.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see live flight status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Flight on time!"
+      },
+      {
+        icon: "🏨",
+        title: "Hotel Booking",
+        category: "travel",
+        description: "Book hotels instantly with best rates.",
+        steps: [
+          { text: "You search for hotels.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for hotel deals.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API returns best offers.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You book hotel instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Hotel booked!"
+      },
+      // --- Satellite & Space (2) ---
+      {
+        icon: "🛰️",
+        title: "Satellite Weather Data",
+        category: "satellite",
+        description: "Get live weather images from space.",
+        steps: [
+          { text: "You open weather satellite app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for satellite images.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest images.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see live weather from space.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Satellite data loaded!"
+      },
+      {
+        icon: "🌌",
+        title: "NASA Mars Rover Photos",
+        category: "satellite",
+        description: "See the latest images from Mars rovers.",
+        steps: [
+          { text: "You open NASA Mars app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks NASA API for rover photos.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest Mars images.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You view Mars on your phone.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Mars photo loaded!"
+      },
+      // --- Utilities (2) ---
+      {
+        icon: "🌤️",
+        title: "Weather App",
+        category: "utility",
+        description: "Check the weather in your city.",
+        steps: [
+          { text: "You open the weather app and tap 'Check Weather'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks the Weather API for latest info.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches data from weather server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "API sends weather details back to your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: 75°F, Sunny with scattered clouds"
+      },
+      {
+        icon: "⏰",
+        title: "World Clock",
+        category: "utility",
+        description: "See the time in any city.",
+        steps: [
+          { text: "You search for 'New York time'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for world time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches current time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see the time instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: New York time: 8:00 AM"
+      },
+      // --- News & Media (2) ---
+      {
+        icon: "📰",
+        title: "News Aggregator",
+        category: "news",
+        description: "Read news from multiple sources in one app.",
+        steps: [
+          { text: "You open a news app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks APIs for latest headlines.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API collects news from many sites.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see all headlines in one place.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Top headline: 'Tech Advances in 2025'"
+      },
+      {
+        icon: "🎧",
+        title: "Podcast Player",
+        category: "news",
+        description: "Listen to podcasts from around the world.",
+        steps: [
+          { text: "You search for a podcast.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for podcast list.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest episodes.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You listen instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Now playing: 'API Stories'"
+      },
+      // --- Education (2) ---
+      {
+        icon: "📚",
+        title: "Online Courses",
+        category: "education",
+        description: "Access courses from top universities.",
+        steps: [
+          { text: "You search for a course.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for course list.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches courses from universities.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You enroll instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Enrolled in Python 101!"
+      },
+      {
+        icon: "📝",
+        title: "Exam Results",
+        category: "education",
+        description: "Check your results online.",
+        steps: [
+          { text: "You enter your roll number.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for results.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches your marks.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Results appear instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: You scored 92%!"
+      },
+      // --- Security (2) ---
+      {
+        icon: "🔑",
+        title: "Login with Google",
+        category: "security",
+        description: "Sign in to any app with one click.",
+        steps: [
+          { text: "You click 'Login with Google'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055682.png" },
+          { text: "App sends a request to Google's API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "Google checks your account.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You're logged in instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Logged in as: user@gmail.com"
+      },
+      {
+        icon: "🔒",
+        title: "2FA Authentication",
+        category: "security",
+        description: "Add extra security to your accounts.",
+        steps: [
+          { text: "You enter your password.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for 2FA code.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API sends code to your phone.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You enter code to login.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: 2FA verified!"
+      }
+    ];
+
+    // --- Render Functions ---
+    function renderCategories(selected) {
+      let html = '';
+      categories.forEach(cat => {
+        html += `<button class="category-btn px-3 py-1 rounded ${selected === cat.id ? 'active' : ''}" onclick="showCategory('${cat.id}')">${cat.label}</button>`;
+      });
+      document.getElementById('categories-nav').innerHTML = html;
+    }
+
+    function renderExamples(examplesArr) {
+      let html = '';
+      examplesArr.forEach((ex, idx) => {
+        const demoId = `api-demo-${ex.title.replace(/\s/g, '')}-${idx}`;
+        const stepsId = `api-steps-${ex.title.replace(/\s/g, '')}-${idx}`;
+        const progressId = `api-progress-${ex.title.replace(/\s/g, '')}-${idx}`;
+        const resultId = `api-result-${ex.title.replace(/\s/g, '')}-${idx}`;
+        html += `
+          <div class="bg-white p-4 rounded shadow mb-6">
+            <div class="flex items-center mb-2">
+              <img src="${ex.steps[0].img}" alt="" class="demo-img mr-3" />
+              <div>
+                <div class="font-bold text-lg">${ex.title}</div>
+                <div class="text-sm text-gray-700">${ex.description}</div>
+              </div>
+            </div>
+            <button onclick="showAPIDemo('${demoId}', '${stepsId}', '${progressId}', '${resultId}', ${idx}, '${ex.category}')" class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">See a Demo</button>
+            <div id="${demoId}" class="hidden mt-4">
+              <div id="${stepsId}" class="flex flex-col gap-2 mb-2"></div>
+              <div class="progress-bar" id="${progressId}"></div>
+              <div id="${resultId}" class="hidden mt-2 text-green-600 font-bold"></div>
+            </div>
+          </div>
+        `;
+      });
+      return html;
+    }
+
+    // --- Main/Subpage Navigation ---
+    function showCategory(catId) {
+      renderCategories(catId);
+      const filtered = apiExamples.filter(ex => ex.category === catId);
+      document.getElementById('main-content').innerHTML = `
+        <h2 class="text-2xl font-bold mb-4">${categories.find(c=>c.id===catId).label} API Examples</h2>
+        <div>${renderExamples(filtered)}</div>
+      `;
+    }
+    function showAll() {
+      renderCategories(null);
+      document.getElementById('main-content').innerHTML = `
+        <h2 class="text-2xl font-bold mb-4">🌍 Explore 50+ Real-World API Examples</h2>
+        <div>${renderExamples(apiExamples)}</div>
+      `;
+    }
+
+    // --- See Demo Logic ---
+    function showAPIDemo(demoId, stepsId, progressId, resultId, exIdx, cat) {
+      const ex = apiExamples.filter(e => e.category === cat)[exIdx];
+      const demoElement = document.getElementById(demoId);
+      const stepsElement = document.getElementById(stepsId);
+      const progressBar = document.getElementById(progressId);
+      const resultElement = document.getElementById(resultId);
+
+      demoElement.classList.remove('hidden');
+      stepsElement.innerHTML = '';
+      progressBar.style.width = '0%';
+      resultElement.classList.add('hidden');
+
+      // Show steps one by one
+      const steps = ex.steps;
+      let currentStep = 0;
+      function showStep() {
+        if (currentStep < steps.length) {
+          const step = steps[currentStep];
+          const stepDiv = document.createElement('div');
+          stepDiv.className = 'step active items-center';
+          stepDiv.innerHTML = `
+            <img src="${step.img}" class="demo-img" alt="Step" />
+            <span>${step.text}</span>
+          `;
+          stepsElement.appendChild(stepDiv);
+          currentStep++;
+          setTimeout(showStep, 1000);
+        } else {
+          // Show progress bar and final response
+          let width = 0;
+          progressBar.style.width = '0%';
+          const interval = setInterval(() => {
+            width += 10;
+            progressBar.style.width = width + '%';
+            if (width >= 100) {
+              clearInterval(interval);
+              resultElement.textContent = ex.response;
+              resultElement.classList.remove('hidden');
+            }
+          }, 60);
+        }
+      }
+      showStep();
+      demoElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // --- Initial Page Load ---
+    showAll();
+  </script>
+</body>
+</html>
