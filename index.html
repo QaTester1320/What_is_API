@@ -1,676 +1,871 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What is an API? Explained Visually!</title>
-    <!-- Tailwind CSS CDN for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Font: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Animate.css for cool animations -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-        /* Custom styles for the body and cards */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Light gray background for the page */
-            background-image: linear-gradient(to bottom right, #e0f7fa, #f0f2f5); /* Subtle gradient */
-        }
-        /* Styling for the main explanation cards */
-        .main-card {
-            background-color: white;
-            border-radius: 2rem; /* Even larger rounded corners */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Deeper shadow */
-            padding: 3rem;
-            margin-bottom: 3rem;
-            border: 1px solid #e2e8f0; /* Light border */
-        }
-        /* Styling for individual example cards */
-        .example-card {
-            background-color: #ffffff;
-            border-radius: 1.5rem; /* Large rounded corners */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Subtle shadow */
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth hover effect */
-            border: 1px solid #edf2f7; /* Very light border */
-        }
-        /* Hover effect for example cards */
-        .example-card:hover {
-            transform: translateY(-8px); /* Lifts the card more on hover */
-            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.08); /* Enhanced shadow on hover */
-        }
-        /* Styling for the circular icon containers */
-        .icon-container {
-            width: 72px; /* Slightly larger icon container */
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 9999px; /* Makes it a perfect circle */
-            background-color: #e0f7fa; /* Lighter blue background */
-            color: #00838f; /* Teal icon color */
-            font-size: 3rem; /* Larger icon size */
-            margin-bottom: 1.5rem;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); /* Inner shadow for depth */
-        }
-        /* Styling for the animation/visual placeholder boxes */
-        .visual-box {
-            background-color: #f8fafc; /* Very light gray background */
-            border-radius: 1.25rem; /* More rounded corners */
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            border: 2px dashed #b0e0e6; /* More prominent dashed border for visual distinction */
-            text-align: center;
-            font-style: italic;
-            color: #4a5568; /* Darker gray text color */
-            overflow: hidden; /* Ensures content stays within bounds */
-        }
-        .visual-box img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 0.75rem; /* Rounded corners for images inside */
-            margin-top: 1rem;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1); /* Soft shadow for images */
-        }
-        .step-icon {
-            font-size: 3.5rem;
-            animation: bounceIn 1s ease-out forwards; /* Animate.css bounce effect */
-            opacity: 0; /* Start hidden for animation */
-        }
-        .step-icon:nth-child(1) { animation-delay: 0.2s; }
-        .step-icon:nth-child(2) { animation-delay: 0.4s; }
-        .step-icon:nth-child(3) { animation-delay: 0.6s; }
-
-        /* Chatbot specific styles */
-        #chat-container {
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #e2e8f0;
-            border-radius: 1rem;
-            padding: 1rem;
-            background-color: #fdfefe;
-            margin-bottom: 1rem;
-        }
-        .chat-message {
-            margin-bottom: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-            max-width: 80%;
-        }
-        .user-message {
-            background-color: #e0f7fa;
-            color: #00838f;
-            margin-left: auto;
-            text-align: right;
-        }
-        .gemini-message {
-            background-color: #f0f9ff;
-            color: #1e40af;
-            margin-right: auto;
-            text-align: left;
-        }
-        .loading-dots {
-            display: inline-block;
-            width: 1.5rem;
-            text-align: left;
-        }
-        .loading-dots::after {
-            content: ' .';
-            animation: dots 1s steps(5, end) infinite;
-        }
-        @keyframes dots {
-            0%, 20% {
-                color: rgba(0,0,0,0);
-                text-shadow:
-                    .25em 0 0 rgba(0,0,0,0),
-                    .5em 0 0 rgba(0,0,0,0);
-            }
-            40% {
-                color: #4a5568;
-                text-shadow:
-                    .25em 0 0 rgba(0,0,0,0),
-                    .5em 0 0 rgba(0,0,0,0);
-            }
-            60% {
-                text-shadow:
-                    .25em 0 0 #4a5568,
-                    .5em 0 0 rgba(0,0,0,0);
-            }
-            80%, 100% {
-                text-shadow:
-                    .25em 0 0 #4a5568,
-                    .5em 0 0 #4a5568;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>APIs in Real Life – Interactive & Fun Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .animate-bounce { animation: bounce 1s infinite; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .progress-bar {
+      background: #3b82f6;
+      height: 10px;
+      border-radius: 5px;
+      width: 0;
+      transition: width 0.3s;
+    }
+    .step { display: none; }
+    .step.active { display: flex; }
+    .demo-img, .demo-gif { width: 48px; height: 48px; object-fit: cover; margin-right: 1rem; border-radius: 8px; }
+    .dark .bg-white { background-color: #23272f !important; }
+    .dark .text-gray-900 { color: #f7fafc !important; }
+    .dark .text-gray-700 { color: #e5e7eb !important; }
+    .dark .text-gray-500 { color: #a0aec0 !important; }
+    .dark .bg-blue-100 { background-color: #2d3748 !important; }
+    .dark .text-black { color: #f7fafc !important; }
+    .dark .border-gray-200 { border-color: #4a5568 !important; }
+    .dark .bg-gray-50 { background-color: #171923 !important; }
+    .dark .shadow { box-shadow: 0 2px 8px rgba(0,0,0,0.7) !important; }
+    .dark .bg-blue-500 { background-color: #2563eb !important; }
+    .dark .hover\:bg-blue-600:hover { background-color: #1e40af !important; }
+    .dark .bg-gray-200 { background-color: #23272f !important; }
+    .dark .hover\:bg-gray-300:hover { background-color: #2d3748 !important; }
+    .dark .bg-gray-700 { background-color: #2d3748 !important; }
+    .dark .text-gray-800 { color: #e5e7eb !important; }
+    .dark .text-gray-100 { color: #f7fafc !important; }
+    .dark .bg-blue-600 { background-color: #1e40af !important; }
+    .category-btn.active, .category-btn:hover { background: #3b82f6; color: #fff; }
+    .dark .category-btn.active, .dark .category-btn:hover { background: #2563eb; color: #fff; }
+  </style>
 </head>
-<body>
-    <div class="min-h-screen flex flex-col items-center py-16 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-5xl w-full">
-            <!-- Main Title and Introduction Section -->
-            <div class="text-center mb-16 animate__animated animate__fadeInDown">
-                <h1 class="text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
-                    What is an API? <br class="hidden sm:inline"> Explained for Everyone!
-                </h1>
-                <p class="text-2xl text-gray-700 max-w-3xl mx-auto">
-                    Imagine a helpful messenger or a universal remote that lets different apps and services talk to each other. That's an API! It's how your favorite digital tools get things done securely and efficiently, all behind the scenes.
-                </p>
-            </div>
-
-            <!-- How an API Works Section - General Analogy -->
-            <div class="main-card animate__animated animate__fadeInUp">
-                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">How This Digital Messenger Works</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-center text-center">
-                    <!-- Step 1: You Make a Request -->
-                    <div>
-                        <div class="icon-container mx-auto step-icon animate__animated">👋</div>
-                        <p class="text-xl font-semibold text-gray-700 mb-2">1. You Ask for Something</p>
-                        <p class="text-gray-600">You click a button, type a search, or give a voice command in an app.</p>
-                    </div>
-                    <!-- Step 2: The API Delivers Your Request -->
-                    <div>
-                        <div class="icon-container mx-auto step-icon animate__animated">📨</div>
-                        <p class="text-xl font-semibold text-gray-700 mb-2">2. The API Takes Your Order</p>
-                        <p class="text-gray-600">Your app sends this request to the API, like a waiter taking your order to the kitchen.</p>
-                    </div>
-                    <!-- Step 3: You Get a Response -->
-                    <div>
-                        <div class="icon-container mx-auto step-icon animate__animated">🎁</div>
-                        <p class="text-xl font-semibold text-gray-700 mb-2">3. The API Brings Back Info</p>
-                        <p class="text-gray-600">The API gets the information you asked for and delivers it back to your app, neatly organized.</p>
-                    </div>
-                </div>
-                <!-- General API Workflow Visual Placeholder -->
-                <div class="visual-box mt-12">
-                    <p class="text-lg font-semibold text-gray-800 mb-4">See the API Workflow in Action!</p>
-                    <img src="https://placehold.co/700x300/cbebf2/00838f?text=API+Workflow+Diagram" alt="API Workflow Diagram" class="mx-auto">
-                </div>
-            </div>
-
-            <!-- 20 Real-World Examples Section -->
-            <div class="text-center mb-12 animate__animated animate__fadeIn">
-                <h2 class="text-5xl font-bold text-gray-800 leading-tight">20 Times APIs Make Your Life Easier!</h2>
-                <p class="text-xl text-gray-700 mt-4 max-w-3xl mx-auto">
-                    APIs are the invisible helpers behind almost everything you do online. Let's look at some cool examples!
-                </p>
-            </div>
-
-            <!-- Grid for the 20 examples -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                <!-- Example 1: Weather Forecast Apps -->
-                <div class="example-card animate__animated animate__zoomIn">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">☀️</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">1. Weather Forecast Apps</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You check your phone for today's weather before heading out.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> Your weather app doesn't have its own weather station! It uses an API to send a request to a big weather data provider (like AccuWeather or OpenWeatherMap). The API fetches the latest forecast (temperature, rain chances, wind speed) for your exact location and sends it back to your app, which then displays it beautifully.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Weather+App+Forecast" alt="Weather App Forecast">
-                    </div>
-                </div>
-
-                <!-- Example 2: Online Shopping Websites (Product Listings) -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 0.1s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🛍️</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">2. Online Shopping Websites</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You search for "headphones" on your favorite online store.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> When you type your search, the website uses an API to talk to its huge product database. It asks, "Show me all headphones!" The API fetches all the relevant details – images, prices, descriptions, customer reviews – and sends them back to the website, which then organizes and shows them to you instantly.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Online+Shopping+Products" alt="Online Shopping Products">
-                    </div>
-                </div>
-
-                <!-- Example 3: "Login with Google/Facebook" Buttons -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 0.2s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🔑</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">3. "Login with Google/Facebook"</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You sign up for a new app and click "Login with Google" instead of creating a new password.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> The new app doesn't ask for your Google password. Instead, it uses Google's API. It sends a secure request: "Can this user log in?" Google's API securely verifies your identity (after you approve it) and tells the new app, "Yes, they're good to go!" without ever sharing your sensitive password.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Login+with+Social+Media" alt="Login with Social Media">
-                    </div>
-                </div>
-
-                <!-- Example 4: Flight Booking Websites -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 0.3s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">✈️</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">4. Flight Booking Websites</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You search for flights from London to New York on a travel site like Skyscanner.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> This travel website doesn't store all airline data itself. It uses APIs from many different airlines (British Airways, American Airlines, etc.) and other travel providers. It sends a request to all these APIs: "Show me flights for these dates!" Each API responds with their available flights and prices, allowing the website to show you all options in one convenient place.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Flight+Search+Results" alt="Flight Search Results">
-                    </div>
-                </div>
-
-                <!-- Example 5: Google Maps & Navigation -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 0.4s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🗺️</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">5. Google Maps & Navigation</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You use a food delivery app and want to see where your driver is on the map.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> The food delivery app doesn't have its own mapping system. It uses Google Maps' API to display the map and your driver's real-time location. The app sends a request to Google Maps API: "Show me this location!" and the API sends back the map data and location pins, which the app then overlays seamlessly.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Food+Delivery+Map" alt="Food Delivery Map">
-                    </div>
-                </div>
-
-                <!-- Example 6: Online Payments (e.g., PayPal, Stripe) -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 0.5s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">💳</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">6. Online Payments</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You buy something online and pay with your credit card or a service like PayPal.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> When you enter your card details on a shopping site, the site doesn't directly handle your sensitive financial information. Instead, it uses an API from a secure payment gateway (like Stripe or PayPal). It sends a request to the payment API: "Process this payment!" The payment API securely talks to your bank, gets approval, and sends back a "Payment Successful!" message to the shopping site.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Secure+Online+Payment" alt="Secure Online Payment">
-                    </div>
-                </div>
-
-                <!-- Example 7: Food Delivery Apps (Restaurant Menus & Orders) -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 0.6s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🍔</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">7. Food Delivery Apps</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You browse menus and order a pizza using a food delivery app.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> The app uses APIs to connect with various restaurants, fetching their latest menus, prices, and availability. When you place an order, the app uses another API to send your order details directly to the restaurant's kitchen system. It also uses mapping APIs (like Google Maps) to track your delivery driver.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Food+Delivery+Order" alt="Food Delivery Order">
-                    </div>
-                </div>
-
-                <!-- Example 8: Music Streaming Services -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 0.7s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🎶</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">8. Music Streaming Services</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You search for a song on Spotify and hit play.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> When you type a song title, Spotify's app uses an API to search its massive music library. The API finds the song, album art, artist info, and sends it back to your app. When you hit play, another API call streams the music data to your device, allowing you to listen instantly.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Music+Streaming+App" alt="Music Streaming App">
-                    </div>
-                </div>
-
-                <!-- Example 9: Ride-Sharing Apps -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 0.8s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🚗</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">9. Ride-Sharing Apps</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You request a ride from your current location using Uber or Ola.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> The app uses a mapping API to pinpoint your location and show nearby cars. When you request a ride, the app uses another API to send your request to available drivers. Once a driver accepts, the app uses APIs to update their location on your map in real-time and send you notifications about their arrival.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Ride+Sharing+Map" alt="Ride Sharing Map">
-                    </div>
-                </div>
-
-                <!-- Example 10: Online Banking Apps -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 0.9s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🏦</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">10. Online Banking Apps</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You check your bank balance and recent transactions on your phone.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> Your banking app uses a highly secure API to communicate with your bank's main computer system. When you log in, the app sends a request to the API: "Show me my account balance and last 5 transactions!" The API securely fetches this sensitive data and sends it back to your app for display.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Online+Banking+App" alt="Online Banking App">
-                    </div>
-                </div>
-
-                <!-- Example 11: Stock Market & Investment Apps -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.0s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">📈</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">11. Stock Market Apps</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You check the live price of a stock or cryptocurrency on your investment app.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> Investment apps don't manually update stock prices. They use APIs from financial data providers (like Bloomberg, Yahoo Finance, or crypto exchanges). The app sends a request: "What's the current price of Apple stock?" The API instantly fetches the real-time data and sends it back to your app to show you dynamic charts and figures.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Stock+Market+Chart" alt="Stock Market Chart">
-                    </div>
-                </div>
-
-                <!-- Example 12: Hotel Booking Sites -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.1s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🏨</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">12. Hotel Booking Sites</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You search for available hotels in Paris for your upcoming vacation.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> Similar to flight booking, these sites use APIs from thousands of hotels and hotel chains worldwide. They send requests to these hotel APIs: "Show me available rooms in Paris from X to Y date!" The APIs respond with room types, prices, photos, and real-time availability, which the booking site then aggregates and displays for you.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Hotel+Booking+Results" alt="Hotel Booking Results">
-                    </div>
-                </div>
-
-                <!-- Example 13: News Aggregator Apps -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.2s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">📰</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">13. News Aggregator Apps</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You open a news app like Google News to see the latest headlines from various sources.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> News apps don't write their own articles. They use APIs from various news sources (BBC, CNN, Reuters, local newspapers, etc.). The app sends requests to these news APIs: "Give me the top headlines!" The APIs send back the article titles, summaries, images, and links, allowing the app to show you a personalized and up-to-the-minute news feed.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=News+Headlines+Feed" alt="News Headlines Feed">
-                    </div>
-                </div>
-
-                <!-- Example 14: Language Translation Tools -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.3s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🗣️</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">14. Language Translation Tools</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You type a sentence in English into Google Translate and want it translated to Spanish.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> When you type text, the translation app sends your text and desired language to a powerful translation service's API (like Google Translate API). The API processes the text using complex artificial intelligence, translates it, and sends back the translated sentence almost instantly.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Language+Translation" alt="Language Translation">
-                    </div>
-                </div>
-
-                <!-- Example 15: Smart Home Devices -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.4s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">💡</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">15. Smart Home Devices</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You tell your smart speaker, "Turn on the living room lights," or check your thermostat temperature on your phone.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> Your smart speaker (like Alexa or Google Home) uses an API to talk to your smart light bulb's system. It sends a command: "Turn on light ID 123." The light bulb's API receives this command and tells the bulb to switch on. Similarly, your phone app uses an API to ask the smart thermostat for its current reading.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Smart+Home+Control" alt="Smart Home Control">
-                    </div>
-                </div>
-
-                <!-- Example 16: Fitness Trackers & Health Apps -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.5s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🏃</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">16. Fitness Trackers & Health Apps</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> Your fitness tracker automatically syncs your daily steps and heart rate to your health app.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> Your fitness tracker (like Fitbit or Apple Watch) has an API that allows your health app to securely access its collected data. The app sends a request: "Give me today's step count and average heart rate." The tracker's API securely provides this data, which your app then displays in easy-to-understand graphs and summaries.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Fitness+Tracker+Data" alt="Fitness Tracker Data">
-                    </div>
-                </div>
-
-                <!-- Example 17: Online Gaming (Leaderboards, Multiplayer) -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.6s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🎮</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">17. Online Gaming</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You finish a game and see your score instantly appear on a global leaderboard, or play a multiplayer game.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> When you finish a game, your game sends your score to the game server's API. The API updates the leaderboard and might even match you with other players using another API. For multiplayer games, APIs are constantly used to send and receive player actions (e.g., "Player A moved left," "Player B fired a shot") to keep the game synchronized for everyone.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Online+Gaming+Leaderboard" alt="Online Gaming Leaderboard">
-                    </div>
-                </div>
-
-                <!-- Example 18: Customer Service Chatbots -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.7s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">🤖</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">18. Customer Service Chatbots</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You ask a chatbot on a website about your recent order status.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> The chatbot itself doesn't "know" your order status. When you type your question (e.g., "Where is my order #123?"), the chatbot uses an API to send your query to the company's order management system. The API fetches your order details and sends them back to the chatbot, which then presents the information to you in a friendly, conversational way.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Chatbot+Assistance" alt="Chatbot Assistance">
-                    </div>
-                </div>
-
-                <!-- Example 19: Automated Email Notifications -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.8s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">📧</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">19. Automated Email Notifications</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You receive an automatic email confirmation after buying something online.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> The online store uses an API from an email service provider (like SendGrid or Mailchimp). After your purchase, the store's system sends a request to the email API: "Send an order confirmation email to this address with these details!" The email API then handles the complex task of sending the email, so the store doesn't have to build its own email sending system.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Email+Notification" alt="Email Notification">
-                    </div>
-                </div>
-
-                <!-- Example 20: Cloud Storage Sync -->
-                <div class="example-card animate__animated animate__zoomIn" style="animation-delay: 1.9s;">
-                    <div class="flex items-center mb-4">
-                        <div class="icon-container mr-4">☁️</div>
-                        <h3 class="text-2xl font-semibold text-gray-800">20. Cloud Storage Sync</h3>
-                    </div>
-                    <p class="text-gray-700 mb-3">
-                        <strong>Scenario:</strong> You save a document on your computer, and it instantly appears on your phone via Dropbox or Google Drive.
-                    </p>
-                    <p class="text-gray-600 mb-3">
-                        <strong>How API Works:</strong> When you save a file to your cloud storage folder, the app on your computer uses an API to tell the main cloud server: "I've got a new file here, upload it!" The cloud server's API receives the file. Then, when you open the cloud storage app on your phone, its app uses the same API to ask the cloud: "Are there any new files?" and downloads the updated version, keeping everything in sync.
-                    </p>
-                    <div class="visual-box">
-                        <img src="https://placehold.co/500x200/d4edda/155724?text=Cloud+Storage+Sync" alt="Cloud Storage Sync">
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- API Q&A Chatbot Section (New Feature with Gemini API) -->
-            <div class="main-card mt-16 animate__animated animate__fadeInUp">
-                <h2 class="text-4xl font-bold text-gray-800 mb-8 text-center">Ask Gemini About APIs! ✨</h2>
-                <p class="text-lg text-gray-600 mb-6 text-center">
-                    Have more questions about APIs? Type them below and our AI assistant, powered by the Gemini API, will help you understand!
-                </p>
-
-                <div id="chat-container" class="flex flex-col space-y-4">
-                    <!-- Initial Gemini message -->
-                    <div class="chat-message gemini-message">
-                        Hello! I'm here to answer your questions about APIs. What would you like to know?
-                    </div>
-                </div>
-
-                <div class="flex mt-6 space-x-4">
-                    <input type="text" id="user-input" class="flex-grow p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700" placeholder="Type your question here...">
-                    <button id="send-button" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition-all transform hover:scale-105 flex items-center justify-center">
-                        Ask Gemini ✨
-                    </button>
-                </div>
-                <div id="loading-indicator" class="text-center text-gray-500 mt-4 hidden">
-                    Gemini is thinking<span class="loading-dots"></span>
-                </div>
-                <div id="error-message" class="text-center text-red-600 mt-4 hidden">
-                    Oops! Something went wrong. Please try again.
-                </div>
-            </div>
+<body class="bg-gray-50 text-gray-900 transition-colors duration-300" id="body">
+  <div class="max-w-5xl mx-auto p-4">
+    <!-- Header -->
+    <header class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
+      <div>
+        <h1 class="text-4xl font-extrabold mb-2 flex items-center gap-2">
+          <span class="animate-bounce">🤖</span>
+          <span>APIs in Real Life</span>
+        </h1>
+        <div class="flex items-center gap-3 mt-2">
+          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2k3M3h2Y3k0Z2Z2d2F0M2ZzN3Bod2FqZ3YxY3J1dG9jZWU2a2ZyZyZ1b2N1eGk1a3lqN2xpZyZ2b2FzYjV3Z3Y3d2xwOGk1cG4w/g9582DNuQppxC/giphy.gif" alt="API Animation" class="demo-gif" />
+          <p class="text-lg max-w-2xl">
+            <b>APIs</b> are like <b>digital messengers</b> that let apps, devices, and websites <span class="text-blue-600">work together</span>.<br>
+            <span class="text-blue-500 font-bold">Order food, play games, chat, shop, or travel—all powered by APIs!</span>
+          </p>
         </div>
-    </div>
-    <script>
-        // Simple Intersection Observer to trigger animations as elements scroll into view
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__animated', 'animate__zoomIn');
-                    observer.unobserve(entry.target); // Stop observing once animated
-                }
-            });
-        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+      </div>
+      <button id="toggleMode" class="mt-4 md:mt-0 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-4 py-2 rounded shadow hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center gap-2">
+        <span id="modeIcon">🌙</span> <span id="modeText">Dark Mode</span>
+      </button>
+    </header>
 
-        document.querySelectorAll('.example-card').forEach(card => {
-            observer.observe(card);
-        });
+    <!-- Categories Navigation -->
+    <nav class="mb-8 flex flex-wrap gap-2" id="categories-nav"></nav>
 
-        // Animate the general steps icons on load
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.step-icon').forEach(icon => {
-                icon.style.opacity = 1; // Make visible for animation
-            });
+    <!-- Main Content -->
+    <main id="main-content"></main>
 
-            // Chatbot functionality
-            const userInput = document.getElementById('user-input');
-            const sendButton = document.getElementById('send-button');
-            const chatContainer = document.getElementById('chat-container');
-            const loadingIndicator = document.getElementById('loading-indicator');
-            const errorMessage = document.getElementById('error-message');
+    <footer class="text-center text-gray-500 py-8 border-t border-gray-200 mt-8">
+      <p>Made with ❤️ to help everyone understand APIs</p>
+      <p class="text-sm mt-2">Note: Images and GIFs are for demonstration only.</p>
+    </footer>
+  </div>
 
-            let chatHistory = []; // To maintain conversation context
+  <script>
+    // --- Light/Dark Mode ---
+    const body = document.getElementById('body');
+    const toggleBtn = document.getElementById('toggleMode');
+    const modeIcon = document.getElementById('modeIcon');
+    const modeText = document.getElementById('modeText');
+    let darkMode = false;
+    toggleBtn.onclick = function() {
+      darkMode = !darkMode;
+      document.body.classList.toggle('dark');
+      modeIcon.textContent = darkMode ? '☀️' : '🌙';
+      modeText.textContent = darkMode ? 'Light Mode' : 'Dark Mode';
+    };
 
-            // Function to add a message to the chat display
-            function addMessage(sender, text) {
-                const messageDiv = document.createElement('div');
-                messageDiv.classList.add('chat-message', sender === 'user' ? 'user-message' : 'gemini-message');
-                messageDiv.textContent = text;
-                chatContainer.appendChild(messageDiv);
-                chatContainer.scrollTop = chatContainer.scrollHeight; // Scroll to bottom
+    // --- Categories & Data ---
+    const categories = [
+      { id: "gaming", label: "🎮 Gaming" },
+      { id: "ecommerce", label: "🛒 E-commerce" },
+      { id: "mapsfood", label: "🗺️ Maps & Food" },
+      { id: "smarthome", label: "🏠 Smart Home" },
+      { id: "communication", label: "📱 Communication" },
+      { id: "finance", label: "💳 Finance" },
+      { id: "health", label: "🏥 Health" },
+      { id: "travel", label: "✈️ Travel" },
+      { id: "satellite", label: "🛰️ Satellite & Space" },
+      { id: "utility", label: "🛠️ Utilities" },
+      { id: "news", label: "📰 News & Media" },
+      { id: "education", label: "📚 Education" },
+      { id: "security", label: "🔒 Security" }
+    ];
+
+    // --- 50+ Real-World Examples ---
+    // Each example: icon, title, category, description, steps (with images/gifs), response
+    const apiExamples = [
+      // --- Gaming (7) ---
+      {
+        icon: "🎮",
+        title: "PUBG Multiplayer",
+        category: "gaming",
+        description: "Connect and play with 100 players worldwide in real time.",
+        steps: [
+          { text: "You tap 'Start Match' in PUBG.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055687.png" },
+          { text: "Game sends your request to the API server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API matches you with 99 other players.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "Real-time moves sync via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" }
+        ],
+        response: "API Response: Match started! 100 players online."
+      },
+      {
+        icon: "🧩",
+        title: "Candy Crush Sync",
+        category: "gaming",
+        description: "Save your puzzle progress and scores to the cloud.",
+        steps: [
+          { text: "You clear a level in Candy Crush.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "Game sends your score to the API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API stores your progress in the cloud.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Your progress syncs across devices.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055674.png" }
+        ],
+        response: "API Response: Level up! Score saved to your account."
+      },
+      {
+        icon: "👻",
+        title: "Unlock Horror Stories",
+        category: "gaming",
+        description: "Get new chapters in story games instantly.",
+        steps: [
+          { text: "You finish a chapter in a horror game.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "Game asks API for next chapter.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API delivers new content.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "You continue your spooky adventure.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055680.png" }
+        ],
+        response: "API Response: New chapter unlocked!"
+      },
+      {
+        icon: "🕹️",
+        title: "Arcade Leaderboards",
+        category: "gaming",
+        description: "See who’s #1 in the world.",
+        steps: [
+          { text: "You get a high score.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055682.png" },
+          { text: "Game posts your score via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API updates global leaderboard.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You check your rank instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: You are now #5 globally!"
+      },
+      {
+        icon: "🎲",
+        title: "Online Puzzles",
+        category: "gaming",
+        description: "Play puzzles with friends and see real-time moves.",
+        steps: [
+          { text: "You invite a friend to a puzzle game.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "Game uses API to connect both players.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API syncs moves in real time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" },
+          { text: "You solve puzzles together!", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" }
+        ],
+        response: "API Response: Puzzle solved! Both scores updated."
+      },
+      {
+        icon: "🏎️",
+        title: "Racing Game Ghosts",
+        category: "gaming",
+        description: "Race against your previous best lap (ghost data).",
+        steps: [
+          { text: "You finish a lap in a racing game.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "Game uploads your lap time via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API stores ghost data on server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Next race, your ghost appears.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055674.png" }
+        ],
+        response: "API Response: Your ghost is ready for the next race!"
+      },
+      {
+        icon: "🎤",
+        title: "Voice Chat in Games",
+        category: "gaming",
+        description: "Talk to teammates using in-game voice chat APIs.",
+        steps: [
+          { text: "You press 'Talk' in a game.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" },
+          { text: "Game sends your voice to API server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API routes voice to your friends.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Friends hear you in real time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Voice chat connected."
+      },
+      // --- E-commerce (7) ---
+      {
+        icon: "🛒",
+        title: "Product Search",
+        category: "ecommerce",
+        description: "Find the best products and deals instantly.",
+        steps: [
+          { text: "You search for headphones.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for product info.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API gets details and reviews.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see best matches in the app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Best match: 'Wireless Headphones'"
+      },
+      {
+        icon: "📦",
+        title: "Order Tracking",
+        category: "ecommerce",
+        description: "Track your package in real-time.",
+        steps: [
+          { text: "You check your order status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "App asks shipping API for updates.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API gets info from courier.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "You see live tracking in your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Your package is out for delivery!"
+      },
+      {
+        icon: "💳",
+        title: "Payment Gateway",
+        category: "ecommerce",
+        description: "Pay securely with many options.",
+        steps: [
+          { text: "You choose to pay by card.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App sends payment info to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API processes payment securely.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "You get instant confirmation.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Payment successful!"
+      },
+      {
+        icon: "⭐",
+        title: "Customer Reviews",
+        category: "ecommerce",
+        description: "See what others say before you buy.",
+        steps: [
+          { text: "You check product reviews.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "App fetches reviews via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API gets reviews from the server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "You read reviews instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: 4.8/5 stars from 1,200 reviews."
+      },
+      {
+        icon: "🎁",
+        title: "Gift Card Redemption",
+        category: "ecommerce",
+        description: "Redeem and use gift cards online.",
+        steps: [
+          { text: "You enter a gift card code.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055682.png" },
+          { text: "App checks code with API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API verifies and applies balance.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "You use your gift card instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Gift card applied! ₹500 added."
+      },
+      {
+        icon: "📱",
+        title: "Mobile Wallets",
+        category: "ecommerce",
+        description: "Pay with Google Pay, PhonePe, or Paytm.",
+        steps: [
+          { text: "You select 'Pay with Google Pay'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App sends payment request to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API processes payment instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "Order confirmed in seconds.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Payment received via Google Pay!"
+      },
+      {
+        icon: "🧾",
+        title: "Invoice Download",
+        category: "ecommerce",
+        description: "Download your bill after purchase.",
+        steps: [
+          { text: "You tap 'Download Invoice'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "App requests invoice from API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API generates and sends PDF.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "Invoice downloads to your device.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Invoice downloaded!"
+      },
+      // --- Maps & Food (6) ---
+      {
+        icon: "🗺️",
+        title: "Google Maps Directions",
+        category: "mapsfood",
+        description: "Get directions to anywhere instantly.",
+        steps: [
+          { text: "You search for a destination.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks Google Maps API for route.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API returns directions and traffic info.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see the route on your map.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Route found! ETA: 20 min."
+      },
+      {
+        icon: "🍔",
+        title: "Zomato Food Ordering",
+        category: "mapsfood",
+        description: "Order food from your favorite restaurant.",
+        steps: [
+          { text: "You browse Zomato for food.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for restaurant menus.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API returns menu & prices.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You place order via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Order placed! Delivery in 30 min."
+      },
+      {
+        icon: "🍟",
+        title: "Swiggy Delivery Tracking",
+        category: "mapsfood",
+        description: "Track your food delivery live.",
+        steps: [
+          { text: "You order food on Swiggy.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for delivery status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API tracks delivery partner's location.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "You see your food on the map.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Your food is 5 min away!"
+      },
+      {
+        icon: "☕",
+        title: "Starbucks Store Locator",
+        category: "mapsfood",
+        description: "Find the nearest Starbucks.",
+        steps: [
+          { text: "You search 'Starbucks near me'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for stores nearby.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API returns list of stores.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see the closest Starbucks.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Starbucks 400m away."
+      },
+      {
+        icon: "🍕",
+        title: "Domino's Pizza Tracker",
+        category: "mapsfood",
+        description: "Track your pizza from oven to door.",
+        steps: [
+          { text: "You order pizza on Domino's app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for pizza status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API updates status: baking, out for delivery.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "You see live pizza tracker.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Pizza out for delivery!"
+      },
+      {
+        icon: "🍱",
+        title: "Uber Eats Menu Sync",
+        category: "mapsfood",
+        description: "See real-time menus from restaurants.",
+        steps: [
+          { text: "You browse Uber Eats.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for updated menus.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API syncs menu changes instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see latest menu in app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Menu updated!"
+      },
+      // --- Smart Home (5) ---
+      {
+        icon: "💡",
+        title: "Smart Bulb Control",
+        category: "smarthome",
+        description: "Turn on/off your lights with your phone.",
+        steps: [
+          { text: "You tap 'Turn on' in your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "App sends command to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API talks to smart bulb.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Bulb turns on instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Lights ON!"
+      },
+      {
+        icon: "🔒",
+        title: "Smart Door Lock",
+        category: "smarthome",
+        description: "Lock/unlock your door from anywhere.",
+        steps: [
+          { text: "You tap 'Unlock' on your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055682.png" },
+          { text: "App sends unlock command to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API talks to door lock.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Door unlocks instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Door unlocked!"
+      },
+      {
+        icon: "🌡️",
+        title: "Smart Thermostat",
+        category: "smarthome",
+        description: "Set your home temperature remotely.",
+        steps: [
+          { text: "You set temperature in app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055680.png" },
+          { text: "App sends setting to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API updates thermostat.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Temperature adjusts in real time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Temp set to 22°C."
+      },
+      {
+        icon: "🎥",
+        title: "Smart Security Camera",
+        category: "smarthome",
+        description: "View live camera feed from anywhere.",
+        steps: [
+          { text: "You open camera app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" },
+          { text: "App asks API for live video.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API streams video from camera.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "You watch live feed on phone.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Live feed streaming."
+      },
+      {
+        icon: "🗣️",
+        title: "Voice Assistant (Alexa, Google Home)",
+        category: "smarthome",
+        description: "Control devices with your voice.",
+        steps: [
+          { text: "You say 'Turn on the fan!'", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "Voice assistant sends command to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API controls your smart fan.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "Fan turns on instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Fan ON!"
+      },
+      // --- Communication (4) ---
+      {
+        icon: "📧",
+        title: "Gmail API",
+        category: "communication",
+        description: "Send and receive emails from any app.",
+        steps: [
+          { text: "You write an email in an app.", img: "https://cdn-icons-png.flaticon.com/512/732/732200.png" },
+          { text: "App sends email to Gmail API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API delivers email to recipient.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Recipient reads email instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Email sent!"
+      },
+      {
+        icon: "💬",
+        title: "WhatsApp Messaging",
+        category: "communication",
+        description: "Send instant messages to friends.",
+        steps: [
+          { text: "You type a message in WhatsApp.", img: "https://cdn-icons-png.flaticon.com/512/733/733585.png" },
+          { text: "App sends message via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API delivers message to friend.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Friend receives message instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Message delivered!"
+      },
+      {
+        icon: "📞",
+        title: "Skype Video Call",
+        category: "communication",
+        description: "Make video calls from your device.",
+        steps: [
+          { text: "You start a Skype video call.", img: "https://cdn-icons-png.flaticon.com/512/733/733585.png" },
+          { text: "App connects via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API establishes video stream.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "You see your friend live.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Video call connected!"
+      },
+      {
+        icon: "📲",
+        title: "SMS Gateway",
+        category: "communication",
+        description: "Send SMS from apps (like OTPs).",
+        steps: [
+          { text: "You request OTP for login.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App sends SMS request to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API delivers OTP to your phone.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You receive OTP instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: OTP sent!"
+      },
+      // --- Finance (4) ---
+      {
+        icon: "🏦",
+        title: "Bank Balance Check",
+        category: "finance",
+        description: "See your account balance instantly.",
+        steps: [
+          { text: "You open your bank app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "App asks bank API for balance.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches balance from server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Balance appears in your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Balance: ₹12,500"
+      },
+      {
+        icon: "💸",
+        title: "UPI Money Transfer",
+        category: "finance",
+        description: "Send money instantly with UPI.",
+        steps: [
+          { text: "You enter amount and tap 'Send'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App sends transfer request to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API processes transfer instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "Recipient gets money instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: ₹500 sent successfully!"
+      },
+      {
+        icon: "💱",
+        title: "Currency Conversion",
+        category: "finance",
+        description: "Get real-time exchange rates.",
+        steps: [
+          { text: "You enter amount to convert.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for latest rates.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches rates from currency server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Converted amount appears in app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: ₹1,000 = $12.50"
+      },
+      {
+        icon: "📈",
+        title: "Stock Market App",
+        category: "finance",
+        description: "Track real-time stock prices.",
+        steps: [
+          { text: "You search for a stock.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for stock price.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest price.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Price updates in real time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: TCS ₹3,500.00"
+      },
+      // --- Health (3) ---
+      {
+        icon: "🏃",
+        title: "Fitness Tracker Sync",
+        category: "health",
+        description: "Sync your steps and health data.",
+        steps: [
+          { text: "You walk with your fitness band.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055681.png" },
+          { text: "Band sends data to app via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API updates your daily steps.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see your progress in the app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Steps today: 8,234"
+      },
+      {
+        icon: "🩺",
+        title: "Telemedicine Video Call",
+        category: "health",
+        description: "Consult doctors online via video.",
+        steps: [
+          { text: "You book a video consultation.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055683.png" },
+          { text: "App connects to doctor via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API establishes secure video stream.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "You see your doctor live.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Video call started!"
+      },
+      {
+        icon: "🧬",
+        title: "DNA Test Kit",
+        category: "health",
+        description: "Get your DNA results via app.",
+        steps: [
+          { text: "You send sample to lab.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "Lab uploads results via API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API notifies your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You view results instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Results ready!"
+      },
+      // --- Travel (3) ---
+      {
+        icon: "🚕",
+        title: "Uber Ride Booking",
+        category: "travel",
+        description: "Book rides and track your cab live.",
+        steps: [
+          { text: "You book a ride in Uber.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055679.png" },
+          { text: "App sends booking to API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API finds nearest driver.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055676.png" },
+          { text: "You track driver on the map.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Driver arriving in 3 min."
+      },
+      {
+        icon: "✈️",
+        title: "Flight Status Check",
+        category: "travel",
+        description: "Get real-time flight updates.",
+        steps: [
+          { text: "You search for your flight.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for flight status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest info.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see live flight status.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Flight on time!"
+      },
+      {
+        icon: "🏨",
+        title: "Hotel Booking",
+        category: "travel",
+        description: "Book hotels instantly with best rates.",
+        steps: [
+          { text: "You search for hotels.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for hotel deals.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API returns best offers.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You book hotel instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Hotel booked!"
+      },
+      // --- Satellite & Space (2) ---
+      {
+        icon: "🛰️",
+        title: "Satellite Weather Data",
+        category: "satellite",
+        description: "Get live weather images from space.",
+        steps: [
+          { text: "You open weather satellite app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for satellite images.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest images.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see live weather from space.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Satellite data loaded!"
+      },
+      {
+        icon: "🌌",
+        title: "NASA Mars Rover Photos",
+        category: "satellite",
+        description: "See the latest images from Mars rovers.",
+        steps: [
+          { text: "You open NASA Mars app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks NASA API for rover photos.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest Mars images.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You view Mars on your phone.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Mars photo loaded!"
+      },
+      // --- Utilities (2) ---
+      {
+        icon: "🌤️",
+        title: "Weather App",
+        category: "utility",
+        description: "Check the weather in your city.",
+        steps: [
+          { text: "You open the weather app and tap 'Check Weather'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks the Weather API for latest info.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches data from weather server.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "API sends weather details back to your app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: 75°F, Sunny with scattered clouds"
+      },
+      {
+        icon: "⏰",
+        title: "World Clock",
+        category: "utility",
+        description: "See the time in any city.",
+        steps: [
+          { text: "You search for 'New York time'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for world time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches current time.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see the time instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: New York time: 8:00 AM"
+      },
+      // --- News & Media (2) ---
+      {
+        icon: "📰",
+        title: "News Aggregator",
+        category: "news",
+        description: "Read news from multiple sources in one app.",
+        steps: [
+          { text: "You open a news app.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks APIs for latest headlines.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API collects news from many sites.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You see all headlines in one place.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Top headline: 'Tech Advances in 2025'"
+      },
+      {
+        icon: "🎧",
+        title: "Podcast Player",
+        category: "news",
+        description: "Listen to podcasts from around the world.",
+        steps: [
+          { text: "You search for a podcast.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for podcast list.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches latest episodes.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You listen instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Now playing: 'API Stories'"
+      },
+      // --- Education (2) ---
+      {
+        icon: "📚",
+        title: "Online Courses",
+        category: "education",
+        description: "Access courses from top universities.",
+        steps: [
+          { text: "You search for a course.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055677.png" },
+          { text: "App asks API for course list.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches courses from universities.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You enroll instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Enrolled in Python 101!"
+      },
+      {
+        icon: "📝",
+        title: "Exam Results",
+        category: "education",
+        description: "Check your results online.",
+        steps: [
+          { text: "You enter your roll number.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for results.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API fetches your marks.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "Results appear instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: You scored 92%!"
+      },
+      // --- Security (2) ---
+      {
+        icon: "🔑",
+        title: "Login with Google",
+        category: "security",
+        description: "Sign in to any app with one click.",
+        steps: [
+          { text: "You click 'Login with Google'.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055682.png" },
+          { text: "App sends a request to Google's API.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "Google checks your account.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You're logged in instantly.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: Logged in as: user@gmail.com"
+      },
+      {
+        icon: "🔒",
+        title: "2FA Authentication",
+        category: "security",
+        description: "Add extra security to your accounts.",
+        steps: [
+          { text: "You enter your password.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055678.png" },
+          { text: "App asks API for 2FA code.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055672.png" },
+          { text: "API sends code to your phone.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055675.png" },
+          { text: "You enter code to login.", img: "https://cdn-icons-png.flaticon.com/512/1055/1055673.png" }
+        ],
+        response: "API Response: 2FA verified!"
+      }
+    ];
+
+    // --- Render Functions ---
+    function renderCategories(selected) {
+      let html = '';
+      categories.forEach(cat => {
+        html += `<button class="category-btn px-3 py-1 rounded ${selected === cat.id ? 'active' : ''}" onclick="showCategory('${cat.id}')">${cat.label}</button>`;
+      });
+      document.getElementById('categories-nav').innerHTML = html;
+    }
+
+    function renderExamples(examplesArr) {
+      let html = '';
+      examplesArr.forEach((ex, idx) => {
+        const demoId = `api-demo-${ex.title.replace(/\s/g, '')}-${idx}`;
+        const stepsId = `api-steps-${ex.title.replace(/\s/g, '')}-${idx}`;
+        const progressId = `api-progress-${ex.title.replace(/\s/g, '')}-${idx}`;
+        const resultId = `api-result-${ex.title.replace(/\s/g, '')}-${idx}`;
+        html += `
+          <div class="bg-white p-4 rounded shadow mb-6">
+            <div class="flex items-center mb-2">
+              <img src="${ex.steps[0].img}" alt="" class="demo-img mr-3" />
+              <div>
+                <div class="font-bold text-lg">${ex.title}</div>
+                <div class="text-sm text-gray-700">${ex.description}</div>
+              </div>
+            </div>
+            <button onclick="showAPIDemo('${demoId}', '${stepsId}', '${progressId}', '${resultId}', ${idx}, '${ex.category}')" class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">See a Demo</button>
+            <div id="${demoId}" class="hidden mt-4">
+              <div id="${stepsId}" class="flex flex-col gap-2 mb-2"></div>
+              <div class="progress-bar" id="${progressId}"></div>
+              <div id="${resultId}" class="hidden mt-2 text-green-600 font-bold"></div>
+            </div>
+          </div>
+        `;
+      });
+      return html;
+    }
+
+    // --- Main/Subpage Navigation ---
+    function showCategory(catId) {
+      renderCategories(catId);
+      const filtered = apiExamples.filter(ex => ex.category === catId);
+      document.getElementById('main-content').innerHTML = `
+        <h2 class="text-2xl font-bold mb-4">${categories.find(c=>c.id===catId).label} API Examples</h2>
+        <div>${renderExamples(filtered)}</div>
+      `;
+    }
+    function showAll() {
+      renderCategories(null);
+      document.getElementById('main-content').innerHTML = `
+        <h2 class="text-2xl font-bold mb-4">🌍 Explore 50+ Real-World API Examples</h2>
+        <div>${renderExamples(apiExamples)}</div>
+      `;
+    }
+
+    // --- See Demo Logic ---
+    function showAPIDemo(demoId, stepsId, progressId, resultId, exIdx, cat) {
+      const ex = apiExamples.filter(e => e.category === cat)[exIdx];
+      const demoElement = document.getElementById(demoId);
+      const stepsElement = document.getElementById(stepsId);
+      const progressBar = document.getElementById(progressId);
+      const resultElement = document.getElementById(resultId);
+
+      demoElement.classList.remove('hidden');
+      stepsElement.innerHTML = '';
+      progressBar.style.width = '0%';
+      resultElement.classList.add('hidden');
+
+      // Show steps one by one
+      const steps = ex.steps;
+      let currentStep = 0;
+      function showStep() {
+        if (currentStep < steps.length) {
+          const step = steps[currentStep];
+          const stepDiv = document.createElement('div');
+          stepDiv.className = 'step active items-center';
+          stepDiv.innerHTML = `
+            <img src="${step.img}" class="demo-img" alt="Step" />
+            <span>${step.text}</span>
+          `;
+          stepsElement.appendChild(stepDiv);
+          currentStep++;
+          setTimeout(showStep, 1000);
+        } else {
+          // Show progress bar and final response
+          let width = 0;
+          progressBar.style.width = '0%';
+          const interval = setInterval(() => {
+            width += 10;
+            progressBar.style.width = width + '%';
+            if (width >= 100) {
+              clearInterval(interval);
+              resultElement.textContent = ex.response;
+              resultElement.classList.remove('hidden');
             }
+          }, 60);
+        }
+      }
+      showStep();
+      demoElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
 
-            // Function to send message to Gemini API
-            async function sendMessageToGemini() {
-                const prompt = userInput.value.trim();
-                if (!prompt) return;
-
-                addMessage('user', prompt); // Display user's message
-                userInput.value = ''; // Clear input
-                errorMessage.classList.add('hidden'); // Hide any previous errors
-                loadingIndicator.classList.remove('hidden'); // Show loading
-
-                // Add user's message to chat history
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-
-                try {
-                    const payload = { contents: chatHistory };
-                    const apiKey = ""; // Canvas will automatically provide this in runtime
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(`API error: ${response.status} ${response.statusText} - ${JSON.stringify(errorData)}`);
-                    }
-
-                    const result = await response.json();
-
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const geminiResponseText = result.candidates[0].content.parts[0].text;
-                        addMessage('gemini', geminiResponseText);
-                        // Add Gemini's response to chat history for context
-                        chatHistory.push({ role: "model", parts: [{ text: geminiResponseText }] });
-                    } else {
-                        addMessage('gemini', "I'm sorry, I couldn't get a clear response. Please try rephrasing your question.");
-                        console.error("Unexpected API response structure:", result);
-                    }
-                } catch (error) {
-                    console.error("Error calling Gemini API:", error);
-                    errorMessage.textContent = "Oops! I encountered an error. Please try again.";
-                    errorMessage.classList.remove('hidden');
-                    // Optionally, remove the last user message from history if the API call failed
-                    chatHistory.pop();
-                } finally {
-                    loadingIndicator.classList.add('hidden'); // Hide loading
-                }
-            }
-
-            // Event listeners for sending messages
-            sendButton.addEventListener('click', sendMessageToGemini);
-            userInput.addEventListener('keypress', (event) => {
-                if (event.key === 'Enter') {
-                    sendMessageToGemini();
-                }
-            });
-        });
-    </script>
+    // --- Initial Page Load ---
+    showAll();
+  </script>
 </body>
 </html>
