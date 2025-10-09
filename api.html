@@ -8,6 +8,30 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
+  
+  .back {
+    display: flex;            /* Apply flexbox to the parent */
+    justify-content: center;  /* Horizontally center the child */
+    align-items: center;      /* Vertically center the child (optional, depending on the parent height) */
+    height: 100%;             /* Make sure parent has a defined height to center vertically */
+}
+
+.back a {
+    border: 2px solid purple;
+    border-radius: 10px;
+    background-color: purple;
+    color : white ;
+    margin-bottom: 10px;
+    width: 150px;
+    padding: 5px;
+    text-align: center;       /* Center text inside the anchor */
+}
+
+.back a:hover {
+    border: 2px solid blue;
+    background-color: blue;
+}
+  
     .example-card {
       transition: all 0.3s ease;
       transform-style: preserve-3d;
@@ -38,6 +62,10 @@
       <h1 class="text-4xl md:text-6xl font-bold text-blue-800 mb-6">What is an API?</h1>
       <p class="text-xl text-gray-700 max-w-3xl mx-auto">APIs are like waiters in a restaurant. They take your order (request) to the kitchen (server) and bring back your food (data). Simple, right?</p>
     </section>
+
+<div class="back">
+    <a href="https://qatester1320.github.io/What_is_API/">Back Page</a>
+</div>
 
     <!-- API Explanation -->
     <section id="api-analogy" class="bg-white rounded-xl shadow-lg p-8 mb-16 overflow-hidden">
@@ -263,6 +291,7 @@
 
     <footer class="text-center text-gray-500 py-8 border-t border-gray-200">
       <p>Made with ❤️ to help everyone understand APIs</p>
+      <p> by Dhara Pandya © 2025
       <p class="text-sm mt-2">Note: All images are placeholders showing what the final content would look like</p>
     </footer>
   </div>
@@ -294,4 +323,3 @@
   </script>
 </body>
 </html>
-
