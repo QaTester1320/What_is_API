@@ -8,6 +8,28 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
+       .back {
+    display: flex;            /* Apply flexbox to the parent */
+    justify-content: center;  /* Horizontally center the child */
+    align-items: center;      /* Vertically center the child (optional, depending on the parent height) */
+    height: 100%;             /* Make sure parent has a defined height to center vertically */
+}
+
+.back a {
+    border: 2px solid purple;
+    border-radius: 10px;
+    background-color: purple;
+    width: 150px;
+    padding: 5px;
+    text-align: center;       /* Center text inside the anchor */
+    margin-bottom: 10px;
+}
+
+.back a:hover {
+    border: 2px solid magenta;
+    background-color: magenta;
+}
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
@@ -75,6 +97,12 @@
             <h1 class="text-4xl md:text-5xl font-bold mb-4">Understanding APIs</h1>
             <p class="text-xl opacity-90">The essential guide to Application Programming Interfaces</p>
         </div>
+        
+        <div class="back">
+            <a href="https://qatester1320.github.io/What_is_API/">Back Page</a>
+        </div>
+        
+        
     </header>
 
     <main class="container mx-auto px-6 py-12">
