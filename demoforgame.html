@@ -539,6 +539,15 @@
     }
 }
 
+
+
+            // Key event listener to pause and resume game with ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        pauseGame();  // Call pauseGame when Escape key is pressed
+    }
+});
+            
             
             function resetGame() {
                 score = 0;
