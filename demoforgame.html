@@ -527,16 +527,18 @@
             }
             
             function pauseGame() {
-                if (gameState === GAME_STATES.PLAYING) {
-                    gameState = GAME_STATES.PAUSED;
-                    pauseScreen.classList.remove('hidden');
-                    cancelAnimationFrame(animationFrameId);
-                } else if (gameState === GAME_STATES.PAUSED) {
-                    gameState = GAME_STATES.PLAYING;
-                    pauseScreen.classList.add('hidden');
-                    gameLoop();
-                }
-            }
+    if (gameState === GAME_STATES.PLAYING) {
+        gameState = GAME_STATES.PAUSED;
+        pauseScreen.classList.remove('hidden');
+        cancelAnimationFrame(animationFrameId); // Stop the game loop
+    } else if (gameState === GAME_STATES.PAUSED) {
+        gameState = GAME_STATES.PLAYING;
+        pauseScreen.classList.add('hidden');
+        // Resume the game loop by calling `gameLoop()` and store the animationFrameId
+        gameLoop();
+    }
+}
+
             
             function resetGame() {
                 score = 0;
