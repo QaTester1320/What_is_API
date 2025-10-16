@@ -526,25 +526,23 @@
                 cancelAnimationFrame(animationFrameId);
             }
             
-            function pauseGame() {
+           function pauseGame() {
     if (gameState === GAME_STATES.PLAYING) {
         gameState = GAME_STATES.PAUSED;
-        pauseScreen.classList.remove('hidden');
+        pauseScreen.classList.remove('hidden'); // Show pause screen
         cancelAnimationFrame(animationFrameId); // Stop the game loop
     } else if (gameState === GAME_STATES.PAUSED) {
         gameState = GAME_STATES.PLAYING;
-        pauseScreen.classList.add('hidden');
-        // Resume the game loop by calling `gameLoop()` and store the animationFrameId
-        gameLoop();
+        pauseScreen.classList.add('hidden'); // Hide pause screen
+        gameLoop(); // Restart the game loop
     }
 }
-
 
 
             // Key event listener to pause and resume game with ESC
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-        pauseGame();  // Call pauseGame when Escape key is pressed
+        pauseGame();  // Call pauseGame when the Escape key is pressed
     }
 });
             
@@ -635,9 +633,7 @@ document.addEventListener('keydown', function(e) {
                     } else if (e.key === ' ') {
                         spacePressed = true;
                         e.preventDefault(); // Prevent page scroll
-                    } else if (e.key === 'Escape') {
-                        pauseGame();
-                    }
+                    } 
                 }
                 
                 // Allow starting/pausing from any state with Enter/Esc
